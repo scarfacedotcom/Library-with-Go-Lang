@@ -52,9 +52,41 @@ func printLibraryBooks(library *Library) {
 		fmt.Println(title, "/ total:", book.total, "/ lended:", book.lended)
 	}
 	fmt.Println()
+}
+func checkoutBook(library *Library, title Title, member *Member) bool {
+	book, found := library.books[title]
+	if !found {
+		fmt.Println("Book not part of the library")
+		return false
+	}
+	if book.lended == book.total {
+		fmt.Println("bro....No more books to lend")
+		return false
+	}
+	book.lended += 1
+	library.books[title] = book
+	member.books[title] = LendAudit{checkOut: time.Now().Round()}
+	return true
+}
+func returnBook(library *Library, title Title, member *Member) bool {
+	book, found := library.books[title]
+	if !found {
+		fmt.Println("Book not part of library")
+		return false
+	}
 
+	audit, found := member.books[title]
+	if !found {
+		fmt.Println("member did not check out this book")
+		return false
+	}
+	book.lended -= 1
+	library.books[title] = book
+
+	audit.checkIn = time.Now()
+	member.books[title] = audit
+	return true
 }
 func main() {
-	fmt.Println("scar face")
 
 }
