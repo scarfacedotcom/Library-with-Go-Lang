@@ -40,7 +40,7 @@ func printMemberAudit(member *Member) {
 	}
 }
 
-func printMemberAudit(library *Library) {
+func printMemberAudits(library *Library) {
 	for _, member := range library.members {
 		printMemberAudit(&member)
 	}
@@ -88,5 +88,37 @@ func returnBook(library *Library, title Title, member *Member) bool {
 	return true
 }
 func main() {
+	library := Library{
+		books:   make(map[Title]BookEntry),
+		members: make(map[Name]Member),
+	}
+
+	library.books["crypto in Rwanda"] = BookEntry{
+		total:  4,
+		lended: 0,
+	}
+
+	library.books["Blockchain book"] = BookEntry{
+		total:  8,
+		lended: 0,
+	}
+
+	library.books["Crypto Alphas"] = BookEntry{
+		total:  5,
+		lended: 0,
+	}
+
+	library.books["Dawn of a new era"] = BookEntry{
+		total:  8,
+		lended: 0,
+	}
+
+	library.members["scarface"] = Member{"scarface", make(map[Title]LendAudit)}
+	library.members["jay"] = Member{"jay", make(map[Title]LendAudit)}
+	library.members["nancy"] = Member{"nancy", make(map[Title]LendAudit)}
+
+	fmt.Println("\nInitial:")
+	printLibraryBooks(&library)
+	printMemberAudits(&library)
 
 }
