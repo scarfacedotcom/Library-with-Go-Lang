@@ -121,4 +121,12 @@ func main() {
 	printLibraryBooks(&library)
 	printMemberAudits(&library)
 
+	member := library.members["scarface"]
+	checkedOut := checkoutBook(&library, "Blockchain book", &member)
+	fmt.Println("\nCheck out a book:")
+	if checkedOut {
+		printLibraryBooks(&library)
+		printMemberAudits(&library)
+
+	}
 }
