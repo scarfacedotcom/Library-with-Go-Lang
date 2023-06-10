@@ -65,7 +65,7 @@ func checkoutBook(library *Library, title Title, member *Member) bool {
 	}
 	book.lended += 1
 	library.books[title] = book
-	member.books[title] = LendAudit{checkOut: time.Now().Round()}
+	member.books[title] = LendAudit{checkOut: time.Now()}
 	return true
 }
 func returnBook(library *Library, title Title, member *Member) bool {
@@ -128,5 +128,11 @@ func main() {
 		printLibraryBooks(&library)
 		printMemberAudits(&library)
 
+	}
+	returned := returnBook(&library, "Blockchain book", &member)
+	fmt.Println("\n Book has been returned")
+	if returned {
+		printLibraryBooks(&library)
+		printMemberAudits(&library)
 	}
 }
